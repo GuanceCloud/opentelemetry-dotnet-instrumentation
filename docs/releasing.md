@@ -33,14 +33,23 @@
    nuke Workflow
    ```
 
-1. Once the pull request has been merged, create a signed tag for the merged commit.
-   You can do this using the following Bash snippet:
+1. Once the pull request has been merged, create a release tag for the merged commit.
+   For GuanceCloud, the simplest path is to use the `create-release-tag` GitHub Actions workflow
+   and provide:
+
+   - `tag`: for example `v1.14.1-guance.1`
+   - `target_ref`: branch, tag, or commit SHA to release from, for example `main`
+
+   The workflow pushes the tag, which then triggers the `release` GitHub workflow to build
+   and upload all release artifacts.
+
+   If you need a signed tag, you can still create it manually using the following Bash snippet:
 
    ```bash
    TAG='v{new-version-here}'
    COMMIT='{commit-sha-here}'
    git tag -s -m $TAG $TAG $COMMIT
-   git push upstream $TAG
+   git push origin $TAG
    ```
 
    After you've pushed the git tag, a `release` GitHub workflow starts.
