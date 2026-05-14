@@ -6,6 +6,9 @@
     <!-- only run .NET Framework tests on Windows -->
     <TargetFrameworks>net10.0;net9.0;net8.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(TargetFrameworks);net462</TargetFrameworks>
+    <!-- Test projects reference helper tooling that currently pulls low-severity
+         NuGet advisories; keep audit enforcement for moderate/high severity. -->
+    <NuGetAuditLevel>moderate</NuGetAuditLevel>
     
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)test-keypair.snk</AssemblyOriginatorKeyFile>
