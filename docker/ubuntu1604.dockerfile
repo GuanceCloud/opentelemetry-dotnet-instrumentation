@@ -25,11 +25,13 @@ RUN add-apt-repository ppa:ubuntu-toolchain-r/test -y && \
     apt-get install -y g++-9 && \
     update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-9
 
-# Install newer cmake, based on https://apt.kitware.com/
-RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null && \
-    echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ xenial main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null && \
-    apt-get update && \
-    apt-get install -y --allow-unauthenticated cmake
+# Install a deterministic CMake version compatible with the native build.
+RUN curl -fsSL --retry 5 --retry-delay 5 https://github.com/Kitware/CMake/releases/download/v3.19.8/cmake-3.19.8-Linux-x86_64.tar.gz -o /tmp/cmake.tar.gz && \
+    tar -C /opt -xzf /tmp/cmake.tar.gz && \
+    ln -s /opt/cmake-3.19.8-Linux-x86_64/bin/cmake /usr/local/bin/cmake && \
+    ln -s /opt/cmake-3.19.8-Linux-x86_64/bin/ctest /usr/local/bin/ctest && \
+    ln -s /opt/cmake-3.19.8-Linux-x86_64/bin/cpack /usr/local/bin/cpack && \
+    rm /tmp/cmake.tar.gz
 
 COPY ./scripts/dotnet-install.sh ./dotnet-install.sh
 

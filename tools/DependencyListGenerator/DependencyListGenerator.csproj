@@ -12,6 +12,9 @@
         It can be udated when .NET8/.NET9 supportf will be dropped.
     -->
     <LangVersion>13.0</LangVersion>
+    <!-- Build helper tooling should still fail on moderate/high advisories, but
+         low-severity transitive package advisories must not block release packaging. -->
+    <NuGetAuditLevel>moderate</NuGetAuditLevel>
   </PropertyGroup>
 
   <ItemGroup>
