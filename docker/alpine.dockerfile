@@ -16,12 +16,8 @@ ENV IsAlpine=true
 ENV PROTOBUF_PROTOC=/usr/bin/protoc
 ENV gRPC_PluginFullPath=/usr/bin/grpc_csharp_plugin
 
-COPY ./scripts/dotnet-install.sh ./dotnet-install.sh
-
-# Install older SDKs using the install script
-RUN chmod +x ./dotnet-install.sh \
-    && ./dotnet-install.sh -v 9.0.312 --install-dir /usr/share/dotnet --no-path \
-    && ./dotnet-install.sh -v 8.0.419 --install-dir /usr/share/dotnet --no-path \
-    && rm dotnet-install.sh
+# The .NET 10 SDK image can build the Alpine workflow targets directly.
+# Avoid installing additional SDKs here because those large downloads have
+# proven flaky in CI and are not required for BuildWorkflow or the smoke test.
 
 WORKDIR /project
