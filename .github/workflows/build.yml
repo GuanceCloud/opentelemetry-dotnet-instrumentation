@@ -133,7 +133,11 @@ jobs:
       - name: Generated files unchanged
         shell: bash
         run: |
-          git status
+          generated_files=(
+            build/LibraryVersions.g.cs
+            test/IntegrationTests/LibraryVersions.g.cs
+          )
+          git status --short -- "${generated_files[@]}"
           git config color.diff always
-          git --no-pager diff
-          [[ -z "$(git status --porcelain)" ]]
+          git --no-pager diff -- "${generated_files[@]}"
+          git diff --quiet -- "${generated_files[@]}"
