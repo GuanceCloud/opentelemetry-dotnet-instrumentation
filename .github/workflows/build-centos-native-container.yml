@@ -25,7 +25,7 @@ jobs:
         set -e
         docker build -t mybuildimage -f "./docker/centos.dockerfile" ./docker
         docker run -e OS_TYPE=linux-glibc --rm --mount type=bind,source="${GITHUB_WORKSPACE}",target=/project mybuildimage \
-          /bin/sh -c 'git config --global --add safe.directory /project && ./build.sh BuildNativeWorkflow'
+          /bin/sh -c 'git config --global --add safe.directory /project && printf "{\n  \"sdk\": {\n    \"version\": \"7.0.404\",\n    \"rollForward\": \"latestFeature\"\n  }\n}\n" > /project/global.json && ./build.sh BuildNativeWorkflow'
 
     - name: Publish native library Linux build
       uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # tag: v7.0.0
