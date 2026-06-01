@@ -51,8 +51,8 @@ partial class Build
             var requiredArtifacts = new string[]
             {
                 "bin-alpine/linux-musl-x64",
-                "bin-ubuntu-20.04/linux-x64",
-                "bin-macos-11/osx-x64",
+                "bin-ubuntu-22.04/linux-x64",
+                "bin-macos-15-intel/osx-x64",
                 "bin-windows-2022/win-x64",
                 "bin-windows-2022/win-x86"
             };
