@@ -23,7 +23,7 @@ function Get-Current-InstallDir() {
 }
 
 function Get-Newest-InstallVersion() { 
-    $query = "https://api.github.com/repos/open-telemetry/opentelemetry-dotnet-instrumentation/releases/latest"
+    $query = "https://api.github.com/repos/GuanceCloud/opentelemetry-dotnet-instrumentation/releases/latest"
 
     $response = Invoke-WebRequest -Uri $query -UseBasicParsing
     $responseJson = $response.Content | ConvertFrom-Json
@@ -70,7 +70,7 @@ function Reset-IIS() {
 
 function Download-OpenTelemetry([string]$Version, [string]$Path) {
     $archive = "opentelemetry-dotnet-instrumentation-windows.zip"
-    $dlUrl = "https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/releases/download/$Version/$archive"
+    $dlUrl = "https://github.com/GuanceCloud/opentelemetry-dotnet-instrumentation/releases/download/$Version/$archive"
     $dlPath = Join-Path $Path $archive
 
     Invoke-WebRequest -Uri $dlUrl -OutFile $dlPath -UseBasicParsing
@@ -80,7 +80,7 @@ function Download-OpenTelemetry([string]$Version, [string]$Path) {
 
 function Download-OpenTelemetry-Install-Module([string]$Version, [string]$Path) {
     $module = "OpenTelemetry.DotNet.Auto.psm1"
-    $dlUrl = "https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/releases/download/$Version/$module"
+    $dlUrl = "https://github.com/GuanceCloud/opentelemetry-dotnet-instrumentation/releases/download/$Version/$module"
     $dlPath = Join-Path $Path $module
 
     Invoke-WebRequest -Uri $dlUrl -OutFile $dlPath -UseBasicParsing
